@@ -1,4 +1,4 @@
-package faw.com.io;
+package a0000.com.io;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -21,6 +21,6 @@ public class BufferedInputFile {
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println(read("E:\\work\\tij_study\\IOChapter\\src\\faw\\com\\io\\BufferedInputFile.java"));
+        System.out.println(read(".\\IOChapter\\src\\a0000\\com\\io\\BufferedInputFile.java"));
     }
 }

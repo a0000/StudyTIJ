@@ -1,4 +1,4 @@
-package faw.com.io;
+package a0000.com.io;
 
 import java.io.*;
 
@@ -7,7 +7,7 @@ import java.io.*;
  */
 public class FormattedMemoryInput {
     public static void main(String[] args) {
-        File file = new File(".\\IOChapter\\src\\faw\\com\\io\\FormattedMemoryInput.java");
+        File file = new File(".\\IOChapter\\src\\a0000\\com\\io\\FormattedMemoryInput.java");
 
         System.out.println(file.exists()+":"+file.getAbsoluteFile());
         String filename = file.getAbsolutePath();

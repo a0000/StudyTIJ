@@ -1,4 +1,4 @@
-package faw.com.io;
+package a0000.com.io;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -8,7 +8,7 @@ import java.io.StringReader;
  */
 public class MemoryInput {
     public static void main(String[] args) throws IOException {
-        String filename = "E:\\work\\tij_study\\IOChapter\\src\\faw\\com\\io\\MemoryInput.java";
+        String filename = ".\\IOChapter\\src\\a0000\\com\\io\\MemoryInput.java";
         StringReader in = new StringReader(BufferedInputFile.read(filename));
         int c;
         while ((c = in.read())!=-1){

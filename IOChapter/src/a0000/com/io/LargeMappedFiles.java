@@ -9,7 +9,7 @@ import static a0000.com.io.utils.Print.*;
  * Created by 100 on 2015/1/22.
  */
 public class LargeMappedFiles {
-    static int length = 0x8ffffff;
+    static int length = 0x8000000;
 
     public static void main(String[] args) throws Exception {
         MappedByteBuffer out = new RandomAccessFile("test.dat", "rw").getChannel().map(FileChannel.MapMode.READ_WRITE, 0, length);

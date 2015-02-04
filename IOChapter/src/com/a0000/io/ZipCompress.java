@@ -3,6 +3,7 @@ package com.a0000.io;
 import java.io.*;
 import java.util.Enumeration;
 import java.util.zip.*;
+import static com.a0000.io.utils.Print.*;
 
 /**
  * Created by 100 on 2015/2/1.

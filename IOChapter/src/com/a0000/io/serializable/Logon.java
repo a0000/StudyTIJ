@@ -3,6 +3,7 @@ package com.a0000.io.serializable;
 import java.io.*;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import static com.a0000.io.utils.Print.*;
 
 /**
  * Created by Administrator on 2015/2/2.

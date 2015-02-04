@@ -1,6 +1,7 @@
 package com.a0000.io.serializable;
 
 import java.io.*;
+import static com.a0000.io.utils.Print.*;
 
 /**
  * Created by Administrator on 2015/2/2.

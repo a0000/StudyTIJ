@@ -1,4 +1,4 @@
-package com.a0000.enu;
+package com.a0000.enums;
 
 /**
  * Created by Administrator on 2015/2/5.

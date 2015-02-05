@@ -1,4 +1,4 @@
-package com.a0000.enu;
+package com.a0000.enums;
 
 import static com.a0000.io.utils.Print.*;
 

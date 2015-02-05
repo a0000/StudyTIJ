@@ -1,6 +1,6 @@
-package com.a0000.enu;
+package com.a0000.enums;
 
-import static com.a0000.enu.Spiciness.*;
+import static com.a0000.enums.Spiciness.*;
 /**
  * Created by Administrator on 2015/2/5.
  */

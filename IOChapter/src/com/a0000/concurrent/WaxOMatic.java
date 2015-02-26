@@ -18,6 +18,12 @@ class Car {
         notifyAll();
     }
 
+    public synchronized void waitForWaxing() throws InterruptedException {
+        while (waxOn == false) {
+            wait();
+        }
+    }
+
     public synchronized void waitForBuffing() throws InterruptedException {
         while (waxOn == true) {
             wait();
@@ -56,7 +62,7 @@ class WaxOff implements Runnable {
     public void run() {
         try {
             while (!Thread.interrupted()) {
-                car.waitForBuffing();
+                car.waitForWaxing();
                 printnb("Wax Off!");
                 TimeUnit.MILLISECONDS.sleep(200);
                 car.buffed();

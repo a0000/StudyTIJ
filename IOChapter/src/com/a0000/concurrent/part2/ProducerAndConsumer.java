@@ -1,4 +1,4 @@
-package com.a0000.concurrent;
+package com.a0000.concurrent.part2;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -117,7 +117,7 @@ public class VendingMachine {
     }
 
     public static void main(String[] args) {
-        args = new String[]{"./IOChapter/src/com/a0000/enums/VendingMachineInput.txt"};
+        // args = new String[]{"./IOChapter/src/com/a0000/enums/VendingMachineInput.txt"};
         Generator<Input> gen = new RandomInputGenerator();
         if (args.length == 1) {
             gen = new FileInputGenerator(args[0]);

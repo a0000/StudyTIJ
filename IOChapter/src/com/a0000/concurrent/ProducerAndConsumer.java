@@ -2,15 +2,20 @@ package com.a0000.concurrent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 商品
  */
 class Product {
     private final int id;
+    private static int identId = 1;
 
-    public Product(int id) {
-        this.id = id;
+    public Product() {
+        synchronized (Product.class) {
+            this.id = identId++;
+        }
     }
 
     @Override
@@ -26,7 +31,7 @@ class Warehouse {
 
     private int maxSize = 100;
     private List<Product> products = new ArrayList<Product>();
-    public synchronized void produce(Product product, Produce produce) {
+    public synchronized void produce(Product product, Producer producer) {
         if (products.size()>=maxSize) {
             System.out.println("仓库已满");
             while (products.size()>=maxSize) {
@@ -38,7 +43,7 @@ class Warehouse {
             }
         } else {
             products.add(product);
-            System.out.println(produce + " 生产了 " + product + "\t仓库已有" + products.size() + "个商品");
+            System.out.println(producer + " 生产了 " + product + "\t仓库已有" + products.size() + "个商品");
         }
         notifyAll();
     }
@@ -64,12 +69,13 @@ class Warehouse {
 /**
  * 生产者
  */
-class Produce implements Runnable {
+class Producer implements Runnable {
 
     private final int id;
     private Warehouse warehouse;
+    private Random rand = new Random(47);
 
-    public Produce(int id, Warehouse warehouse) {
+    public Producer(int id, Warehouse warehouse) {
         this.id = id;
         this.warehouse = warehouse;
     }
@@ -82,7 +88,12 @@ class Produce implements Runnable {
     @Override
     public void run() {
         while (true) {
-            warehouse.produce(new Product());
+            try {
+                TimeUnit.MILLISECONDS.sleep(rand.nextInt(500)+500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            warehouse.produce(new Product(), this);
         }
     }
 }
@@ -94,6 +105,7 @@ class Consumer implements Runnable {
 
     private final int id;
     private Warehouse warehouse;
+    private Random rand = new Random(47);
 
     public Consumer(int id, Warehouse warehouse) {
         this.id = id;
@@ -107,13 +119,32 @@ class Consumer implements Runnable {
 
     @Override
     public void run() {
-
+        while (true) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(rand.nextInt(500)+500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            warehouse.consume(this);
+        }
     }
 }
 
 /**
  * Created by 100 on 2015/3/2.
+ * 自己写的生产者与消费者
  */
 public class ProducerAndConsumer {
+    public static void main(String[] args) {
+        int consumerCount = 3;
+        int producerCount = 5;
+        Warehouse warehouse = new Warehouse();
+        for (int i=0; i<producerCount; i++) {
+            new Thread(new Producer(i,warehouse)).start();
+        }
+        for (int i=0; i<consumerCount; i++) {
+            new Thread(new Consumer(i,warehouse)).start();
+        }
+    }
 
 }

@@ -3,9 +3,8 @@ package com.a0000.concurrent.part2;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Delayed;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.Random;
+import java.util.concurrent.*;
 
 import static com.a0000.io.utils.Print.*;
 
@@ -18,7 +17,7 @@ class DelayedTask implements Runnable, Delayed {
     protected static List<DelayedTask> sequence = new ArrayList<>();
     public DelayedTask(int delayInMilliseconds) {
         delta = delayInMilliseconds;
-        trigger = System.nanoTime() + delta * 1000;
+        trigger = System.nanoTime()+ TimeUnit.NANOSECONDS.convert(delta, TimeUnit.MILLISECONDS);
         sequence.add(this);
     }
 
@@ -68,8 +67,39 @@ class DelayedTask implements Runnable, Delayed {
     }
 }
 
+class DelayedTaskConsumer implements Runnable {
+    private DelayQueue<DelayedTask> q;
+    public DelayedTaskConsumer(DelayQueue<DelayedTask> q) {
+        this.q = q;
+    }
+
+    @Override
+    public void run() {
+        try {
+            while (!Thread.interrupted()) {
+                q.take().run(); // Run task with the current thread
+            }
+        } catch (InterruptedException e) {
+            // Acceptable way to exit
+        }
+        print("Finished DelayedTaskConsumer");
+    }
+}
+
 /**
  * Created by Administrator on 2015/5/20.
  */
 public class DelayQueueDemo {
+    public static void main(String[] args) {
+        Random rand = new Random(47);
+        ExecutorService exec = Executors.newCachedThreadPool();
+        DelayQueue<DelayedTask> queue = new DelayQueue<>();
+        // Fill with tasks that have random delays;
+        for (int i=0; i<20; i++) {
+            queue.put(new DelayedTask(rand.nextInt(5000)));
+        }
+        // Set the stopping point
+        queue.add(new DelayedTask.EndSentinel(5000, exec));
+        exec.execute(new DelayedTaskConsumer(queue));
+    }
 }

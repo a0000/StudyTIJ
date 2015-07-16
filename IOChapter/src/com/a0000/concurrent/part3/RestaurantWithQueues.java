@@ -79,7 +79,7 @@ class Customer implements Runnable {
 
     public void deliver(Plate p) throws InterruptedException {
         // Only blocks if customer is still
-        // eating the previous  course;
+        // eating the previous course;
         placeSetting.put(p);
     }
 

@@ -132,7 +132,7 @@ class WaitPerson implements Runnable {
             while (!Thread.interrupted()) {
                 // Blocks until a course is ready
                 Plate plate = filledOrders.take();
-                print(this + "received" + plate + " delivering to " + plate.getOrder().getCustomer());
+                print(this + "received " + plate + " delivering to " + plate.getOrder().getCustomer());
                 plate.getOrder().getCustomer().deliver(plate);
             }
         } catch (InterruptedException e) {
@@ -166,6 +166,8 @@ class Chef implements Runnable {
                 Food requestedItem = order.item();
                 // Time to prepare order;
                 TimeUnit.MILLISECONDS.sleep(rand.nextInt(500));
+                Plate plate = new Plate(order, requestedItem);
+                order.getWaitPerson().filledOrders.put(plate);
             }
         } catch (InterruptedException e) {
             print(this + " interrupted");
